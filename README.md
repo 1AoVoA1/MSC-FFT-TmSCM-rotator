@@ -5,7 +5,8 @@ SystemVerilog/Verilog. Each module replaces a general-purpose complex
 multiplier with a fixed shift-and-add network built from shifts, additions,
 and subtractions only.
 
-All RTL uses 16-bit signed fixed-point inputs and outputs.
+All RTL uses 16-bit signed fixed-point inputs and outputs. Coefficients are
+quantized as 12-bit signed Q1.11 values (1 sign bit and 11 fractional bits).
 
 ## Modules
 
@@ -38,9 +39,9 @@ vvp testbench.out
 ```
 
 The testbench (`src/tb_cm.sv`) applies 1000 random 16-bit inputs to `TW10`,
-compares each result against a Q10 quantized reference model, and reports the
-RMSE. It also writes `u_TW10.vcd` (waveform) and `u_TW10.txt` (per-sample
-results).
+compares each result against a 12-bit Q1.11 quantized reference model, and
+reports the RMSE. It also writes `u_TW10.vcd` (waveform) and `u_TW10.txt`
+(per-sample results).
 
 Only `TW10` is instantiated in the testbench. The other modules are present
 but their instantiations are commented out.

@@ -92,10 +92,10 @@ module tb_cm;
   integer TW12_9808, TW12_5556, TW12_1951, TW12_8315;
 
 
-  // 量化系数 (乘以 2^10)
+  // 量化系数 (乘以 2^11)
   integer SCALE;
   initial begin
-      SCALE = 2024; // 2^10
+      SCALE = 2048; // 2^11
   end
   // 计算量化后的参考值 (直接截断)
   function signed [15:0] expected_value;
@@ -157,7 +157,7 @@ module tb_cm;
       test_count = 0;
       for (i = 0; i < 1000; i = i + 1) begin
         x = $random % (1 << (`WIDTH-1)) - (1 << (`WIDTH - 2)); // 生成 [-32768, 32767] 范围的随机数
-        x = x >>> 4; 
+        x = x >>> 2; 
         #10;
 
         // 计算参考值（量化后）
