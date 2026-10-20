@@ -86,16 +86,16 @@ module tb_cm;
   //   .sel(sel),
   //   .Y0(Y0_tb)
   // );
-  // 预定义定点量化系数（16-bit）
+  // 预定义定点量化系数（12-bit）
   integer TW10;
-  integer TW11_9239, TW11_3827;
+  integer TW11_9238, TW11_3828;
   integer TW12_9808, TW12_5556, TW12_1951, TW12_8315;
 
 
   // 量化系数 (乘以 2^10)
   integer SCALE;
   initial begin
-      SCALE = 1024; // 2^10
+      SCALE = 2024; // 2^10
   end
   // 计算量化后的参考值 (直接截断)
   function signed [15:0] expected_value;
@@ -103,7 +103,7 @@ module tb_cm;
     input integer coeff_fixed;
     integer res;
     begin
-      res = (x_val * coeff_fixed) >>> 10; // 直接截断
+      res = (x_val * coeff_fixed) >>> 11; // 直接截断
       expected_value = res[15:0]; // 取低 16 位
     end
   endfunction
@@ -112,11 +112,11 @@ module tb_cm;
     // 初始化量化后的系数
     
     // TW10
-    TW10 = 0.7071  * SCALE;
+    TW10 = 0.7070  * SCALE;
     
     // TW11
-    TW11_9239 = 0.9239  * SCALE;
-    TW11_3827 = 0.3827  * SCALE;
+    TW11_9238 = 0.9238  * SCALE;
+    TW11_3828 = 0.3828  * SCALE;
 
     // TW12and13
     TW12_9808 = 0.9808  * SCALE;
@@ -157,7 +157,7 @@ module tb_cm;
       test_count = 0;
       for (i = 0; i < 1000; i = i + 1) begin
         x = $random % (1 << (`WIDTH-1)) - (1 << (`WIDTH - 2)); // 生成 [-32768, 32767] 范围的随机数
-        x = $random >>> 18; 
+        x = x >>> 4; 
         #10;
 
         // 计算参考值（量化后）

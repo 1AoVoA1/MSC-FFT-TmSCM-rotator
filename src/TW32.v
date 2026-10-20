@@ -1,4 +1,4 @@
-//    TW10 = 0.7071
+//    TW10 = 0.7070
 `define WIDTH 16
 
 module TW32_real(
