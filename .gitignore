@@ -1,0 +1,6 @@
+OutputFile.png
+adder_rtl.dot
+out.json
+testbench.out
+*.txt
+*.vcd

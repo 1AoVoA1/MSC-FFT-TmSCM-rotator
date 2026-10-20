@@ -1,0 +1,5 @@
+read_verilog src/const_multiplier.sv
+hierarchy -check
+proc; opt; memory; opt; fsm; opt
+show -format dot -prefix ./adder_rtl
+write_json out.json
